@@ -16,23 +16,23 @@ class ShippingService
 
         switch ($companyName) {
             case 'BlackCat':
-                $blackCat = new BlackCat();
-                $amount = $blackCat->calculateFee($weightArray, $amount);
+                $logistics = new BlackCat();
+                $amount = $logistics->calculateFee($weightArray, $amount);
 
                 break;
             case 'Hsinchu':
-                $hsinchu = new Hsinchu();
-                $amount = $hsinchu->calculateFee($weightArray, $amount);
+                $logistics = new Hsinchu();
+                $amount = $logistics->calculateFee($weightArray, $amount);
 
                 break;
             case 'PostOffice':
-                $post = new Post();
-                $amount = $post->calculateFee($weightArray, $amount);
+                $logistics = new Post();
+                $amount = $logistics->calculateFee($weightArray, $amount);
 
                 break;
             default:
-                $blackCat = new BlackCat();
-                $amount = $blackCat->calculateFee($weightArray, $amount);
+                $logistics = new BlackCat();
+                $amount = $logistics->calculateFee($weightArray, $amount);
 
                 break;
         }

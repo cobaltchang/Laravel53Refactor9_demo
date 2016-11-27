@@ -1,5 +1,9 @@
 <?php
 
+use App\Services\BlackCat;
+use App\Services\Hsinchu;
+use App\Services\LogisticsInterface;
+use App\Services\Post;
 use App\Services\ShippingService;
 
 class ShippingServiceTest extends TestCase
@@ -8,12 +12,13 @@ class ShippingServiceTest extends TestCase
     public function 黑貓_當重量為1_2_3時_費用為360()
     {
         /** arrange */
-        /** @var ShippingService $target */
-        $target = App::make(ShippingService::class);
+        App::bind(LogisticsInterface::class, BlackCat::class);
 
         /** act */
         $weights = [1, 2, 3];
-        $actual = $target->calculateFee($weights, 'BlackCat');
+        $actual = App::call(ShippingService::class . '@calculateFee', [
+            'weightArray' => $weights
+        ]);
 
         /** assert */
         $expected = 360;
@@ -24,12 +29,13 @@ class ShippingServiceTest extends TestCase
     public function 新竹_當重量為1_2_3時_費用為330()
     {
         /** arrange */
-        /** @var ShippingService $target */
-        $target = App::make(ShippingService::class);
+        App::bind(LogisticsInterface::class, Hsinchu::class);
 
         /** act */
         $weights = [1, 2, 3];
-        $actual = $target->calculateFee($weights, 'Hsinchu');
+        $actual = App::call(ShippingService::class . '@calculateFee', [
+            'weightArray' => $weights
+        ]);
 
         /** assert */
         $expected = 330;
@@ -40,12 +46,13 @@ class ShippingServiceTest extends TestCase
     public function 郵局_當重量為1_2_3時_費用為300()
     {
         /** arrange */
-        /** @var ShippingService $target */
-        $target = App::make(ShippingService::class);
+        App::bind(LogisticsInterface::class, Post::class);
 
         /** act */
         $weights = [1, 2, 3];
-        $actual = $target->calculateFee($weights, 'PostOffice');
+        $actual = App::call(ShippingService::class . '@calculateFee', [
+            'weightArray' => $weights
+        ]);
 
         /** assert */
         $expected = 300;

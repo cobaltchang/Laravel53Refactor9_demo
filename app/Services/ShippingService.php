@@ -7,42 +7,13 @@ class ShippingService
     /**
      * 計算運費
      * @param array $weightArray
-     * @param string $companyName
+     * @param LogisticsInterface $logistics
      * @return int
      */
-    public function calculateFee(array $weightArray, string $companyName): int
+    public function calculateFee(array $weightArray, LogisticsInterface $logistics) : int
     {
         $amount = 0;
 
-        switch ($companyName) {
-            case 'BlackCat':
-                $logistics = new BlackCat();
-                $amount = $logistics->calculateFee($weightArray, $amount);
-
-                break;
-            case 'Hsinchu':
-                $logistics = new Hsinchu();
-                $amount = $logistics->calculateFee($weightArray, $amount);
-
-                break;
-            case 'PostOffice':
-                $logistics = new Post();
-                $amount = $logistics->calculateFee($weightArray, $amount);
-
-                break;
-            default:
-                $logistics = new BlackCat();
-                $amount = $logistics->calculateFee($weightArray, $amount);
-
-                break;
-        }
-
-        return $amount;
+        return $logistics->calculateFee($weightArray, $amount);
     }
-
-
-
-
-
-
 }

@@ -2,8 +2,6 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Collection;
-
 class BlackCat extends AbstractLogistics
 {
     /**
@@ -15,10 +13,12 @@ class BlackCat extends AbstractLogistics
     {
         $weights = $this->arrayToCollection($weightArray);
 
-        foreach ($weights as $weight) {
-            $amount = $amount + (100 + $weight * 10);
-        }
+        $amount = $this->loopWeights($amount, $weights, function (int $weight) {
+            return (100 + $weight * 10);
+        });
 
         return $amount;
     }
+
+
 }

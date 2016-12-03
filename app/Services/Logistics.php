@@ -4,7 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Collection;
 
-abstract class AbstractLogistics implements LogisticsInterface
+class Logistics
 {
     use LogTrait;
 
@@ -21,12 +21,14 @@ abstract class AbstractLogistics implements LogisticsInterface
 
     /**
      * @param int $amount
-     * @param Collection $weights
+     * @param array $weightArray
      * @param callable $closure
      * @return int
      */
-    protected function loopWeights(int $amount, Collection $weights, callable $closure): int
+    public function calculateFee(array $weightArray, int $amount, callable $closure): int
     {
+        $weights = $this->arrayToCollection($weightArray);
+
         foreach ($weights as $weight) {
             $amount = $amount + $closure($weight);
         }
@@ -35,4 +37,5 @@ abstract class AbstractLogistics implements LogisticsInterface
 
         return $amount;
     }
+
 }
